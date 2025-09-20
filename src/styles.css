@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+/* No seu styles.css ou styles.scss */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.input-2000 {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-bottom: 2px solid #e0e0e0;
+  border-right: 2px solid #e0e0e0;
+}
+
+.btn-2000 {
+  background-image: linear-gradient(to bottom, #0093ff, #006eb4);
+  box-shadow: 1px 1px 0 #52baff inset, -1px -1px 0 #005a96 inset;
+}
+
+.btn-2000:active {
+  box-shadow: -1px -1px 0 #52baff inset, 1px 1px 0 #005a96 inset;
+}
