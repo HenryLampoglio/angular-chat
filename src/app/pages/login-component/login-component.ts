@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-component',
@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -21,11 +21,10 @@ export class LoginComponent {
 
   onSubmit() {
     if (!this.loginForm.valid) {
-      alert('Formulário inválido');
       return;
     }
 
-    this.http.post('http://localhost:8080/auth/login', this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
       next: (response) => {
         console.log('Resposta do servidor:', response);
       },

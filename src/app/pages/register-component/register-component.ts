@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register-component',
@@ -14,7 +15,12 @@ export class RegisterComponent {
   registerForm: FormGroup;
   passowrdCheckeds: boolean;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.registerForm = this.fb.group({
       nickname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
@@ -49,12 +55,13 @@ export class RegisterComponent {
     const formData = this.registerForm.value;
     const { hashedPasswordConfirmation, ...dataToSend } = formData;
 
-    this.http.post('http://localhost:8080/auth/register', dataToSend).subscribe({
+    this.authService.register(dataToSend).subscribe({
       next: (response) => {
         console.log('Resposta do servidor:', response);
-        localStorage.setItem('currentUser', JSON.stringify(response));
 
-        this.router.navigate(['/login']);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 5000);
       },
       error: (error) => {
         console.error('Erro ao enviar dados para o servidor:', error);
