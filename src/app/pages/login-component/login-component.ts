@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/Auth.service';
+import { UserAuthStorage } from '../../services/user-auth-storage.service';
 
 @Component({
   selector: 'app-login-component',
@@ -11,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  userAuthStorageService = inject(UserAuthStorage);
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
@@ -27,6 +29,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
       next: (response) => {
         console.log('Resposta do servidor:', response);
+        this.userAuthStorageService.set(response.token, response.user);
       },
       error: (error) => {
         console.error('Erro ao enviar dados para o servidor:', error);
