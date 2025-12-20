@@ -1,0 +1,40 @@
+mat-dialog-title {
+  text-align: center;
+  padding: 24px 24px 10px 24px;
+}
+
+.mat-mdc-dialog-surface {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-dialog-content {
+  text-align: center;
+  padding: 0 24px 20px 24px;
+  font-size: 2.1em;
+}
+
+mat-icon {
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+  margin: 20px 0px;
+  align-self: center;
+}
+
+h2 {
+  font-size: 3.5em;
+  font-weight: 500;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.color-success {
+  color: #4caf50;
+}
+
+.color-error {
+  color: #f44336;
+}

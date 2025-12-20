@@ -1,43 +1,82 @@
 <Main
-  class="w-full min-h-screen flex justify-center items-center bg-[#7ab6d6] bg-gradient-to-b from-[#7ab6d6] to-[#2b74b1]"
+  class="min-h-screen bg-[#F8F9F5] flex items-center justify-center p-6 md:p-10 font-sans text-stone-800"
 >
-  <form
-    [formGroup]="loginForm"
-    (ngSubmit)="onSubmit()"
-    class="flex flex-col gap-4 bg-gray-100 w-80 p-8 rounded shadow-md border border-gray-400 md:w-120 md:p-12"
+  <div
+    class="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-xl shadow-emerald-900/5 overflow-hidden flex border border-stone-100"
   >
-    <h1 class="text-3xl font-bold text-center [text-shadow:1px_1px_2px_rgba(0,0,0,0.4)]">Login</h1>
-    <div class="flex flex-col gap-2">
-      <Label for="email" class="text-xl">Email </Label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        class="bg-white p-2 text-sm input-2000"
-      />
+    <div
+      class="sm:flex w-1/2 bg-gradient-to-br from-emerald-50 to-teal-50 items-center justify-center p-10 border-r border-stone-50"
+    >
+      <div class="max-w-[340px] text-center">
+        <img
+          src="https://images.unsplash.com/photo-1763615445790-64c644be359b?auto=format&fit=crop&q=80&w=600"
+          alt="Welcome illustration"
+          class="w-full h-auto rounded-[2rem] shadow-sm mb-8"
+        />
+        <h2 class="text-2xl font-bold text-stone-800 mb-3 tracking-tight">Bem-vindo de volta</h2>
+        <p class="text-base text-stone-600 leading-relaxed">
+          Conecte-se e jogue conversa fora em um ambiente confortável.
+        </p>
+      </div>
     </div>
 
-    <div class="flex flex-col gap-2">
-      <label for="password" class="text-xl">Senha </label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        class="bg-white p-2 text-sm input-2000"
-      />
+    <div class="w-full sm:w-1/2 p-10 md:p-16 flex items-center justify-center bg-white">
+      <div class="w-full max-w-[380px]">
+        <div class="mb-10">
+          <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Login</h1>
+          <p class="text-base text-stone-500 font-medium">É muito bom te ver de novo :)</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          <div>
+            <label for="email" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >EMAIL</label
+            >
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 focus:bg-white transition-all text-base text-stone-800 placeholder:text-stone-400"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >SENHA</label
+            >
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              class="w-full px-5 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 focus:bg-white transition-all text-base text-stone-800 placeholder:text-stone-400"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="submit"
+              [disabled]="!loginForm.valid"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold py-4 rounded-2xl shadow-lg shadow-emerald-100 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Entrar na conta
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-10 text-center">
+          <p class="text-sm text-stone-500">
+            Não tem uma conta?
+            <a
+              [routerLink]="['/register']"
+              class="text-emerald-600 font-bold hover:underline underline-offset-4 ml-1"
+            >
+              Crie uma aqui
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
-
-    <button
-      type="submit"
-      [disabled]="!loginForm.valid"
-      class="btn-2000 border border-[#005a96] hover:brightness-110 p-2 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      Entrar
-    </button>
-
-    <span class="text-center"
-      >Não tem uma conta?
-      <a [routerLink]="['/register']" class="text-blue-600 underline">Crie uma</a></span
-    >
-  </form>
+  </div>
 </Main>

@@ -1,79 +1,123 @@
 <Main
-  class="w-full min-h-screen flex justify-center items-center bg-[#7ab6d6] bg-gradient-to-b from-[#7ab6d6] to-[#2b74b1]"
+  class="min-h-screen bg-[#F8F9F5] flex items-center justify-center p-6 md:p-10 font-sans text-stone-800"
 >
-  <form
-    [formGroup]="registerForm"
-    (ngSubmit)="onSubmit()"
-    class="flex flex-col gap-4 bg-gray-100 w-80 p-8 rounded shadow-md border border-gray-400 md:w-120 md:p-12"
+  <div
+    class="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-xl shadow-emerald-900/5 overflow-hidden flex border border-stone-100"
   >
-    <h1 class="text-3xl font-bold text-center [text-shadow:1px_1px_2px_rgba(0,0,0,0.4)]">
-      Registre-se
-    </h1>
-
-    <div class="flex flex-col gap-2">
-      <Label for="nickname" class="text-xl">Nome de usuário </Label>
-      <input
-        id="nickname"
-        type="text"
-        formControlName="nickname"
-        class="bg-white p-2 text-sm input-2000"
-      />
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <Label for="email" class="text-xl">Email </Label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        class="bg-white p-2 text-sm input-2000"
-      />
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <label for="hashedPassword" class="text-xl">Senha </label>
-      <input
-        id="hashedPassword"
-        type="password"
-        formControlName="hashedPassword"
-        class="bg-white p-2 text-sm input-2000"
-      />
-    </div>
-    <div class="text-red-600" *ngIf="registerForm.get('hashedPassword')?.errors?.['pattern']">
-      a senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um
-      número e um caractere especial.
-    </div>
-
-    <div class="flex flex-col gap-2">
-      <label for="hashedPasswordConfirmation" class="text-xl">Confirme sua senha </label>
-      <input
-        id="hashedPasswordConfirmation"
-        type="password"
-        formControlName="hashedPasswordConfirmation"
-        class="bg-white p-2 text-sm input-2000"
-        #hashedPasswordConfirmation
-        (input)="checkPassowrds()"
-      />
-    </div>
-
     <div
-      class="text-red-600"
-      *ngIf="hashedPasswordConfirmation.value.length > 0 && !passowrdCheckeds"
+      class="sm:flex w-1/2 bg-gradient-to-br from-emerald-50 to-teal-50 items-center justify-center p-10 border-r border-stone-50"
     >
-      as senhas não conferem
+      <div class="max-w-[340px] text-center">
+        <img
+          src="https://images.unsplash.com/photo-1765654706433-3ef820c73ba4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXR1cmUlMjBpbGx1c3RyYXRpb24lMjBtaW5pbWFsfGVufDF8fHx8MTc2NjI2NjgxMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+          alt="Join community"
+          class="w-full h-auto rounded-3xl mb-8"
+        />
+        <h2 class="text-2xl font-bold text-stone-800 mb-3 tracking-tight">Junte-se a nós!</h2>
+        <p class="text-base text-stone-600 leading-relaxed">
+          Crie conexões reais e jogue conversa fora
+        </p>
+      </div>
     </div>
 
-    <button
-      type="submit"
-      [disabled]="!registerForm.valid || !passowrdCheckeds"
-      class="btn-2000 border border-[#005a96] hover:brightness-110 p-2 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      Cadastrar
-    </button>
+    <div class="w-full sm:w-1/2 p-10 md:p-16 flex items-center justify-center bg-white">
+      <div class="w-full max-w-[400px]">
+        <div class="mb-8">
+          <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Crie sua conta</h1>
+          <p class="text-base text-stone-500 font-medium">Vamos começar sua jornada :)</p>
+        </div>
 
-    <span class="text-center"
-      >Ja tem uma conta?
-      <a [routerLink]="['/login']" class="text-blue-600 underline">Acesse aqui</a></span
-    >
-  </form>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+          <div>
+            <label for="nickname" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >NOME DE USUÁRIO</label
+            >
+            <input
+              id="nickname"
+              type="text"
+              formControlName="nickname"
+              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
+              placeholder="Como quer ser chamado?"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >EMAIL</label
+            >
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div>
+            <label for="hashedPassword" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >SENHA</label
+            >
+            <input
+              id="hashedPassword"
+              type="password"
+              formControlName="hashedPassword"
+              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
+              placeholder="••••••••"
+            />
+
+            @if (registerForm.get('hashedPassword')?.errors?.['pattern']) {
+            <p class="mt-2 text-[11px] leading-relaxed text-red-500 font-medium px-1">
+              A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um
+              número e um símbolo.
+            </p>
+            }
+          </div>
+
+          <div>
+            <label
+              for="hashedPasswordConfirmation"
+              class="block text-sm font-bold text-stone-600 mb-2 ml-1"
+              >CONFIRME A SENHA</label
+            >
+            <input
+              id="hashedPasswordConfirmation"
+              type="password"
+              formControlName="hashedPasswordConfirmation"
+              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
+              #passConfirm
+              (input)="checkPassowrds()"
+              placeholder="••••••••"
+            />
+
+            @if (passConfirm.value.length > 0 && !passowrdCheckeds) {
+            <p class="mt-2 text-xs text-red-500 font-bold px-1">As senhas não conferem.</p>
+            }
+          </div>
+
+          <div class="pt-4">
+            <button
+              type="submit"
+              [disabled]="!registerForm.valid || !passowrdCheckeds"
+              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold py-4 rounded-2xl shadow-lg shadow-emerald-100 transition-all active:scale-[0.98] disabled:opacity-50"
+            >
+              Criar minha conta
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-8 text-center">
+          <p class="text-sm text-stone-500">
+            Já tem uma conta?
+            <a
+              [routerLink]="['/login']"
+              class="text-emerald-600 font-bold hover:underline underline-offset-4 ml-1"
+            >
+              Acesse aqui
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </Main>
