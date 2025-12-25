@@ -1,0 +1,49 @@
+<div class="h-scren bg-stone-50 flex flex-col">
+  <!-- Topbar -->
+  <div class="bg-white border-b border-stone-200 px-8 py-6">
+    <div class="max-w-7xl mx-auto flex items-center gap-6">
+      <div class="flex-1 max-w-2xl relative">
+        <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400"
+          >search</mat-icon
+        >
+        <input
+          type="text"
+          placeholder="Encontre novas pessoas e conversas interessantes"
+          class="w-full pl-12 pr-6 py-4 bg-stone-50 border border-stone-200 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all"
+        />
+      </div>
+
+      <button
+        class="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-emerald-700 transition-all"
+      >
+        <mat-icon>groups</mat-icon>
+        <span>Amigos</span>
+      </button>
+
+      <button mat-icon-button class="hover:bg-stone-100" aria-label="Settings">
+        <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="flex-1 flex overflow-hidden">
+    <app-chat-sidebar-component />
+
+    @if(currentChat) {
+    <app-chat-window-component />
+    } @else {
+    <div class="flex-1 flex items-center justify-center bg-stone-50">
+      <div class="text-center">
+        <div
+          class="w-24 h-24 bg-stone-200 rounded-full mx-auto mb-6 flex items-center justify-center"
+        >
+          <mat-icon>search</mat-icon>
+        </div>
+        <h2 class="text-stone-700 mb-2 text-2xl">Nenhuma conversa selecionada</h2>
+        <p class="text-stone-500">Comece uma nova conversa agora</p>
+      </div>
+    </div>
+    }
+  </div>
+</div>
