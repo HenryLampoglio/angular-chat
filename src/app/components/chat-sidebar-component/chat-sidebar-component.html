@@ -1,1 +1,33 @@
-<p>chat-sidebar-component works!</p>
+<div class="w-80 bg-white border-r border-stone-200 flex flex-col h-full">
+  <div class="p-6 border-b border-stone-200">
+    <h2 class="text-2xl">Conversas recentes</h2>
+  </div>
+
+  <div class="flex-1 overflow-y-auto">
+    <button
+      class="w-full p-5 flex items-center gap-4 hover:bg-stone-50 transition-colors border-b border-stone-100"
+    >
+      <div class="relative">
+        <img
+          src="https://ui-avatars.com/api/?name=John+Doe"
+          alt="Profile image"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+        <div
+          class="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"
+        >
+          <span class="text-white text-xs">1</span>
+        </div>
+      </div>
+      <div class="flex-1 text-left min-w-0">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="text-stone-800 truncate">John doe</h3>
+          <span class="text-xs text-stone-500 shrink-0 ml-2 bg-stone-100 px-2 py-1 rounded-full">
+            3h
+          </span>
+        </div>
+        <p class="text-stone-600 truncate">Ola teste de ultima mensagem</p>
+      </div>
+    </button>
+  </div>
+</div>

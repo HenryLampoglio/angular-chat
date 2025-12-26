@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-chat-sidebar-component',
   imports: [],
   templateUrl: './chat-sidebar-component.html',
-  styleUrl: './chat-sidebar-component.css'
+  styleUrl: './chat-sidebar-component.css',
 })
-export class ChatSidebarComponent {
-
-}
+export class ChatSidebarComponent {}
