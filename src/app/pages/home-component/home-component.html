@@ -14,13 +14,19 @@
       </div>
 
       <button
+        (click)="openModal()"
         class="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-emerald-700 transition-all"
       >
         <mat-icon>groups</mat-icon>
         <span>Amigos</span>
       </button>
 
-      <button mat-icon-button class="hover:bg-stone-100" aria-label="Settings">
+      <button
+        mat-icon-button
+        (click)="openSettings()"
+        class="hover:bg-stone-100"
+        aria-label="Settings"
+      >
         <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
       </button>
     </div>
@@ -46,4 +52,12 @@
     </div>
     }
   </div>
+
+  <app-connections-dialog [isOpen]="isConnectionsModalOpen" (onClose)="closeModal()" />
+
+  <app-settings-overlay
+    [isOpen]="isSettingModalsOpen"
+    (onClose)="closeSettings()"
+    (onLogout)="handleLogout()"
+  />
 </div>
