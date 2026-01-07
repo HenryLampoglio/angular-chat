@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../services/Auth.service';
+import { AuthService } from '../../services/auth/Auth.service';
 import { UserAuthStorage } from '../../services/user-auth-storage.service';
 import { ResponseDialog } from '../../components/response-dialog/response-dialog';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';

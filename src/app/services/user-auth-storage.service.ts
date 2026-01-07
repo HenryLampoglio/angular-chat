@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { userData } from '../interfaces/useData.interface';
+import { LoginResponse, userData } from '../interfaces/login.interface';
 import { LocalStorageToken } from '../tokens/local-storage';
 
 @Injectable({
