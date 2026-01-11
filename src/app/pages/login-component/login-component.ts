@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth/Auth.service';
 import { UserAuthStorage } from '../../services/user-auth-storage.service';
 import { ResponseDialog } from '../../components/response-dialog/response-dialog';
@@ -18,7 +18,12 @@ export class LoginComponent {
   loginForm: FormGroup;
   userAuthStorageService = inject(UserAuthStorage);
 
-  constructor(private fb: FormBuilder, private authService: AuthService, public dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    public dialog: MatDialog,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -38,6 +43,10 @@ export class LoginComponent {
           width: '450px',
           height: '300px',
         });
+
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 2000);
       },
       error: (error) => {
         let dialogRef = this.dialog.open(ResponseDialog, {

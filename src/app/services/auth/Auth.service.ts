@@ -23,16 +23,18 @@ export class AuthService {
     this.recoverSession();
   }
 
-  login(credentials: { email: string; password: string }) {
-    return this.http.post<LoginResponse>('http://localhost:8080/auth/login', credentials).pipe(
-      tap((response) => {
-        this.cookieService.set('auth-token', response.token, { path: '/', secure: true });
-
-        localStorage.setItem('user-data', JSON.stringify(response.user));
-
-        this._currentUser.set(response.user);
-      })
-    );
+  // 1. Change arguments here to accept two strings
+  login(email: string, password: string) {
+    // 2. Reconstruct the object inside the http call
+    return this.http
+      .post<LoginResponse>('http://localhost:8080/auth/login', { email, password })
+      .pipe(
+        tap((response) => {
+          this.cookieService.set('auth-token', response.token, { path: '/', secure: true });
+          localStorage.setItem('user-data', JSON.stringify(response.user));
+          this._currentUser.set(response.user);
+        })
+      );
   }
 
   logout() {
