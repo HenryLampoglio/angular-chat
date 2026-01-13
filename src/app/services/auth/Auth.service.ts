@@ -54,6 +54,10 @@ export class AuthService {
     }
   }
 
+  getToken(): string {
+    return this.cookieService.get('auth-token');
+  }
+
   register(userData: UserRegisterInterface): Observable<any> {
     return this.http.post('http://localhost:8080/auth/register', userData);
   }
