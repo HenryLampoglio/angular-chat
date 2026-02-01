@@ -4,6 +4,7 @@ import { ChatSidebarComponent } from '../../components/chat-sidebar-component/ch
 import { ChatWindowComponent } from '../../components/chat-window-component/chat-window-component';
 import { ConnectionsDialog } from '../../components/connections-dialog/connections-dialog';
 import { SettingsOverlay } from '../../components/settings-overlay/settings-overlay';
+import { UserSearchBar } from '../../components/user-search-bar/user-search-bar';
 
 @Component({
   selector: 'app-home-component',
@@ -13,6 +14,7 @@ import { SettingsOverlay } from '../../components/settings-overlay/settings-over
     ChatWindowComponent,
     ConnectionsDialog,
     SettingsOverlay,
+    UserSearchBar,
   ],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
