@@ -24,7 +24,7 @@ export class SocketService {
       heartbeatIncoming: 4000,
       heartbeatOutgoing: 4000,
 
-      debug: (str) => console.log(str),
+      debug: (str) => console.log('socket: ' + str),
     });
 
     this.client.onConnect = (frame) => {

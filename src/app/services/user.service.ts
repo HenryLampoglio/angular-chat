@@ -8,8 +8,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserService {
-  private readonly API_URL = 'http://localhost:8080/user/search';
-
   constructor(private http: HttpClient) {}
 
   searchUsers(query: string): Observable<User[]> {
@@ -21,7 +19,7 @@ export class UserService {
     const params = new HttpParams().set('userIdentifier', query);
 
     return this.http
-      .get<SearchResponse>(this.API_URL, { params })
+      .get<SearchResponse>('user/search', { params })
       .pipe(map((response) => response.usersList));
   }
 }
