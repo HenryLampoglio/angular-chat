@@ -8,7 +8,7 @@ export interface UserSummary {
 export interface ConnectionItem {
   connectionId: string;
   connectionStatus: string;
-  receiverData: UserSummary;
+  userData: UserSummary;
 }
 
 export interface PaginationResponse<T> {

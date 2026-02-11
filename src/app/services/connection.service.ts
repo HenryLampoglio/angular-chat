@@ -15,6 +15,20 @@ export class ConnectionService {
     });
   }
 
+  getInvitesReceived(page: number = 0): Observable<PaginationResponse<ConnectionItem>> {
+    const params = new HttpParams().set('page', page.toString()).set('size', '10');
+
+    return this.http.get<PaginationResponse<ConnectionItem>>('connections/invites-received', {
+      params,
+    });
+  }
+
+  getUserConnections(page: number = 0): Observable<PaginationResponse<ConnectionItem>> {
+    const params = new HttpParams().set('page', page.toString()).set('size', '10');
+
+    return this.http.get<PaginationResponse<ConnectionItem>>('connections/friends', { params });
+  }
+
   sendInvite(receiverId: string): Observable<any> {
     return this.http.post(`connections/send-invite/${receiverId}`, {});
   }

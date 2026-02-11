@@ -80,23 +80,39 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
   }
 
   getUserConnections(page: number) {
-    // this.connectionService.getUserConnections(page).subscribe((response) => {
-    //   this.pageState.items = [...this.pageState.items, ...response.items];
-    //   this.pageState.page = response.page;
-    //   this.pageState.hasMore = response.items.length > 0;
-    //   this.pageState.loading = false;
-    // });
-    console.log('gugugaga');
+    this.connectionService.getUserConnections(page).subscribe({
+      next: (response: PaginationResponse<ConnectionItem>) => {
+        this.pageState.items = [...this.pageState.items, ...response.items];
+        this.pageState.page = response.page;
+        this.pageState.hasMore = this.pageState.page < response.totalPages - 1;
+        this.pageState.page++;
+        this.pageState.loading = false;
+      },
+      error: (error: any) => {
+        console.error('Erro ao buscar amigos:', error);
+
+        this.pageState.error = 'Erro ao buscar convites enviados';
+        this.pageState.loading = false;
+      },
+    });
   }
 
   getInvitesReceived(page: number) {
-    // this.connectionService.GetInvitesReceived(page).subscribe((response) => {
-    //   this.pageState.items = [...this.pageState.items, ...response.items];
-    //   this.pageState.page = response.page;
-    //   this.pageState.hasMore = response.items.length > 0;
-    //   this.pageState.loading = false;
-    // });
-    console.log('gugugaga');
+    this.connectionService.getInvitesReceived(page).subscribe({
+      next: (response: PaginationResponse<ConnectionItem>) => {
+        this.pageState.items = [...this.pageState.items, ...response.items];
+        this.pageState.page = response.page;
+        this.pageState.hasMore = this.pageState.page < response.totalPages - 1;
+        this.pageState.page++;
+        this.pageState.loading = false;
+      },
+      error: (error: any) => {
+        console.error('Erro ao buscar convites enviados:', error);
+
+        this.pageState.error = 'Erro ao buscar convites recebidos';
+        this.pageState.loading = false;
+      },
+    });
   }
 
   getInvitesSent(page: number) {
