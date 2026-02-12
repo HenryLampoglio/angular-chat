@@ -16,3 +16,10 @@ export interface PaginationResponse<T> {
   page: number;
   totalPages: number;
 }
+
+export interface ConnectionInviteAccept{
+  connectionId: string;
+  createdAt: string;
+  updatedAt: string;
+  connectionStatus: string;
+}

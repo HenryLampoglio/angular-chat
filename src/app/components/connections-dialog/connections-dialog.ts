@@ -5,6 +5,7 @@ import { ConnectionItem, PaginationResponse } from '../../models/connection.mode
 import { ConnectionService } from '../../services/connection.service';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-connections-dialog',
@@ -18,7 +19,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
   @Output() onClose = new EventEmitter<void>();
 
   private currentSubscription: Subscription | null = null;
-
+  
   pageState = {
     items: [] as ConnectionItem[],
     page: 0,
@@ -26,8 +27,9 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
     hasMore: true,
     error: '',
   };
-
+  
   private connectionService = inject(ConnectionService);
+  private snackBar = inject(MatSnackBar);
 
   ngOnInit() {
     this.loadData();
@@ -91,7 +93,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       error: (error: any) => {
         console.error('Erro ao buscar amigos:', error);
 
-        this.pageState.error = 'Erro ao buscar convites enviados';
+        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
         this.pageState.loading = false;
       },
     });
@@ -109,7 +111,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       error: (error: any) => {
         console.error('Erro ao buscar convites enviados:', error);
 
-        this.pageState.error = 'Erro ao buscar convites recebidos';
+        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites recebidos';
         this.pageState.loading = false;
       },
     });
@@ -126,11 +128,62 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       },
       error: (error: any) => {
         console.error('Erro ao buscar convites enviados:', error);
-
-        this.pageState.error = 'Erro ao buscar convites enviados';
+        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
         this.pageState.loading = false;
       },
     });
+  }
+
+  acceptInvite(connectionId: string) {
+    const loadingSnack = this.snackBar.open('Aceitando convite...', 'Fechar');
+    this.connectionService.acceptInvite(connectionId).subscribe({
+      next: () => {
+          this.snackBar.open('Convite aceito com sucesso!', 'OK', {
+          duration: 30000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar'],
+        });
+        this.pageState.items = this.pageState.items.filter((item) => item.connectionId !== connectionId);
+      },
+      error: (error: any) => {
+        loadingSnack.dismiss();
+
+        this.snackBar.open('Erro ao aceitar convite', 'Tentar novamente', {
+          duration: 5000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+        console.error('Erro ao enviar convite:', error);
+      },
+    });
+  }
+
+  cancelConnection(connectionId: string) {
+    const loadingSnack = this.snackBar.open('Excluindo conexão...', 'Fechar');
+    this.connectionService.cancelConnection(connectionId).subscribe({
+      next: () => {
+        this.snackBar.open('Conexão excluida com sucesso!', 'OK', {
+          duration: 30000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['success-snackbar'],
+        });
+        this.pageState.items = this.pageState.items.filter((item) => item.connectionId !== connectionId);
+      },
+      error: (error: any) => {
+        loadingSnack.dismiss();
+
+        this.snackBar.open('Erro ao excluir conexão', 'Tentar novamente', {
+          duration: 5000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+        console.error('Erro ao excluir conexão:', error);
+      },
+    })
   }
 
   closeDialog() {

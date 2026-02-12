@@ -115,6 +115,7 @@
             <div class="shrink-0 flex items-center gap-2">
               @if (activeTab === 'sent') {
                 <button
+                  (click)="cancelConnection(item.connectionId)"
                   class="p-2.5 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
                   title="Cancelar convite"
                 >
@@ -125,12 +126,14 @@
               @if (activeTab === 'received') {
                 <div class="flex gap-2">
                   <button
+                    (click)="acceptInvite(item.connectionId)"
                     class="px-4 py-2 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 shadow-lg shadow-emerald-200 transition-all flex items-center gap-1 font-medium text-sm"
                   >
                     <mat-icon class="scale-75">check</mat-icon>
                     Aceitar
                   </button>
                   <button
+                    (click)="cancelConnection(item.connectionId)"
                     class="p-2.5 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
                   >
                     <mat-icon class="text-[20px] w-5 h-5">close</mat-icon>
@@ -148,6 +151,7 @@
                   </button>
 
                   <button
+                    (click)="cancelConnection(item.connectionId)"
                     class="p-2.5 text-stone-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all group-hover:text-stone-400"
                     title="Remover conexão"
                   >
