@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, tap } from 'rxjs';
 import { UserRegisterInterface } from '../../interfaces/register.interface';
 import { LoginResponse, userData } from '../../interfaces/login.interface';
+import { jwtDecode } from 'jwt-decode';
 import path from 'path';
 
 @Injectable({
@@ -54,6 +55,20 @@ export class AuthService {
 
   getToken(): string {
     return this.cookieService.get('auth-token');
+  }
+
+  getUserIdFromToken(): string | null {
+    const token = this.getToken();
+
+    if (!token) return null;
+
+    try {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.sub || null;
+    } catch (error) {
+      console.error('Token inválido', error);
+      return null;
+    }
   }
 
   register(userData: UserRegisterInterface): Observable<any> {
