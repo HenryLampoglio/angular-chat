@@ -6,6 +6,9 @@ import { ConnectionService } from '../../services/connection.service';
 import { Subscription } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatService } from '../../services/chat.service';
+import { ChatStateService } from '../../services/chat-state.service';
+import { IChat } from '../../models/chat.model';
 
 @Component({
   selector: 'app-connections-dialog',
@@ -19,7 +22,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
   @Output() onClose = new EventEmitter<void>();
 
   private currentSubscription: Subscription | null = null;
-  
+
   pageState = {
     items: [] as ConnectionItem[],
     page: 0,
@@ -27,9 +30,11 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
     hasMore: true,
     error: '',
   };
-  
+
   private connectionService = inject(ConnectionService);
   private snackBar = inject(MatSnackBar);
+  private chatService = inject(ChatService);
+  private chatStateService = inject(ChatStateService);
 
   ngOnInit() {
     this.loadData();
@@ -93,7 +98,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       error: (error: any) => {
         console.error('Erro ao buscar amigos:', error);
 
-        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
+        if (error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
         this.pageState.loading = false;
       },
     });
@@ -111,7 +116,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       error: (error: any) => {
         console.error('Erro ao buscar convites enviados:', error);
 
-        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites recebidos';
+        if (error.status !== 404) this.pageState.error = 'Erro ao buscar convites recebidos';
         this.pageState.loading = false;
       },
     });
@@ -128,7 +133,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
       },
       error: (error: any) => {
         console.error('Erro ao buscar convites enviados:', error);
-        if(error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
+        if (error.status !== 404) this.pageState.error = 'Erro ao buscar convites enviados';
         this.pageState.loading = false;
       },
     });
@@ -138,13 +143,15 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
     const loadingSnack = this.snackBar.open('Aceitando convite...', 'Fechar');
     this.connectionService.acceptInvite(connectionId).subscribe({
       next: () => {
-          this.snackBar.open('Convite aceito com sucesso!', 'OK', {
+        this.snackBar.open('Convite aceito com sucesso!', 'OK', {
           duration: 30000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
           panelClass: ['success-snackbar'],
         });
-        this.pageState.items = this.pageState.items.filter((item) => item.connectionId !== connectionId);
+        this.pageState.items = this.pageState.items.filter(
+          (item) => item.connectionId !== connectionId,
+        );
       },
       error: (error: any) => {
         loadingSnack.dismiss();
@@ -170,7 +177,9 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
           verticalPosition: 'top',
           panelClass: ['success-snackbar'],
         });
-        this.pageState.items = this.pageState.items.filter((item) => item.connectionId !== connectionId);
+        this.pageState.items = this.pageState.items.filter(
+          (item) => item.connectionId !== connectionId,
+        );
       },
       error: (error: any) => {
         loadingSnack.dismiss();
@@ -183,7 +192,7 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
         });
         console.error('Erro ao excluir conexão:', error);
       },
-    })
+    });
   }
 
   closeDialog() {
@@ -192,5 +201,33 @@ export class ConnectionsDialog implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.currentSubscription) this.currentSubscription.unsubscribe();
+  }
+
+  joinChat(targetUserId: string, targetNicknameId: string) {
+    const loadingSnack = this.snackBar.open('Iniciando conversa...', 'Fechar');
+
+    // 2. Faz o subscribe para disparar a requisição REST
+    this.chatService.getChatId(targetUserId).subscribe({
+      next: (chat: IChat) => {
+        loadingSnack.dismiss();
+
+        // 3. Avisa o sistema inteiro qual é o ID da sala ativa
+        // O IChat.id é do tipo UUID (que no TypeScript é tratado como string)
+        this.chatStateService.abrirChat(chat.id.toString(), targetNicknameId);
+
+        // 4. Fecha o modal para o usuário ver o chat lá atrás!
+        this.closeDialog();
+      },
+      error: (error: any) => {
+        loadingSnack.dismiss();
+        this.snackBar.open('Erro ao iniciar a conversa', 'Fechar', {
+          duration: 5000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar'],
+        });
+        console.error('Erro ao buscar chat ID:', error);
+      },
+    });
   }
 }

@@ -32,7 +32,7 @@
   <div class="flex-1 flex overflow-hidden">
     <app-chat-sidebar-component />
 
-    @if (!currentChat) {
+    @if (currentChat()) {
       <app-chat-window-component class="flex-1 w-full h-full" />
     } @else {
       <div class="flex-1 flex items-center justify-center bg-stone-50">
@@ -49,6 +49,7 @@
     }
   </div>
 
+  <!-- Modals -->
   <app-connections-dialog [isOpen]="isConnectionsModalOpen" (onClose)="closeModal()" />
 
   <app-settings-overlay

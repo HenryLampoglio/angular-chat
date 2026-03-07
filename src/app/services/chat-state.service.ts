@@ -1,12 +1,15 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatStateService {
   chatIdAtivo = signal<string | null>(null);
 
-  abrirChat(chatId: string) {
+  chatNomeAtivo = signal<string>('Contato');
+
+  abrirChat(chatId: string, nomeContato: string) {
     this.chatIdAtivo.set(chatId);
+    this.chatNomeAtivo.set(nomeContato);
   }
 }
