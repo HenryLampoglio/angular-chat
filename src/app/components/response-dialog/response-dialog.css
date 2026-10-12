@@ -1,40 +1,50 @@
-mat-dialog-title {
-  text-align: center;
-  padding: 24px 24px 10px 24px;
-}
-
-.mat-mdc-dialog-surface {
+:host {
   display: flex;
-  text-align: center;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+mat-dialog-title {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.35rem !important;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 mat-dialog-content {
   text-align: center;
-  padding: 0 24px 20px 24px;
-  font-size: 2.1em;
+  padding: 0.5rem 1rem 1rem 1rem !important;
+  font-size: 0.95rem !important;
+  line-height: 1.5;
+  color: #64748b;
 }
 
 mat-icon {
-  font-size: 80px;
-  height: 80px;
-  width: 80px;
-  margin: 20px 0px;
+  font-size: 52px !important;
+  height: 52px !important;
+  width: 52px !important;
+  margin: 0.5rem 0 0.25rem 0;
   align-self: center;
 }
 
-h2 {
-  font-size: 3.5em;
-  font-weight: 500;
-  margin-bottom: 0;
-  text-align: center;
-}
-
 .color-success {
-  color: #4caf50;
+  color: #10b981;
 }
 
 .color-error {
-  color: #f44336;
+  color: #ef4444;
+}
+
+mat-dialog-actions {
+  padding-bottom: 0.5rem;
+  justify-content: center;
+}
+
+mat-dialog-actions button {
+  border-radius: 0.75rem !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.5rem !important;
 }

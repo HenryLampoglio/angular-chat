@@ -4,10 +4,11 @@ import { SocketService, ChatMessageResponseDTO } from '../../services/socket.ser
 import { AuthService } from '../../services/auth/Auth.service';
 import { ChatStateService } from '../../services/chat-state.service';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-chat-window-component',
-  imports: [CommonModule, MessageInput],
+  imports: [CommonModule, MessageInput, MatIconModule],
   templateUrl: './chat-window-component.html',
   styleUrl: './chat-window-component.css',
 })

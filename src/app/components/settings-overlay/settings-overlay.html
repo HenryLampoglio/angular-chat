@@ -1,329 +1,371 @@
-<div *ngIf="isOpen" class="fixed inset-0 z-50 bg-stone-50 overflow-hidden">
-  <div class="h-full flex">
-    <div class="w-80 bg-white border-r border-stone-200 p-8 flex flex-col">
-      <div class="flex items-center justify-between mb-8">
-        <h1 class="text-2xl font-bold text-stone-800">Settings</h1>
-        <button
-          (click)="handleClose()"
-          class="p-2 hover:bg-stone-100 rounded-full transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-stone-600"
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/60 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+>
+  <div class="absolute inset-0" (click)="handleClose()"></div>
+
+  <div
+    class="relative w-full max-w-4xl h-[85vh] bg-white dark:bg-[#0f172a] rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col md:flex-row transition-all duration-300"
+  >
+    <!-- Sidebar de Navegação das Configurações -->
+    <div
+      class="w-full md:w-72 bg-slate-50/80 dark:bg-[#0b1120] border-b md:border-b-0 md:border-r border-slate-200/70 dark:border-slate-800/80 p-6 flex flex-col justify-between shrink-0"
+    >
+      <div>
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-2.5">
+            <div
+              class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 dark:from-violet-600 dark:to-indigo-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 dark:shadow-violet-600/30"
+            >
+              <mat-icon class="scale-90">tune</mat-icon>
+            </div>
+            <h1 class="text-xl font-bold text-slate-800 dark:text-slate-100">Configurações</h1>
+          </div>
+
+          <button
+            (click)="handleClose()"
+            class="md:hidden p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-xl hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
           >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <nav class="space-y-1.5">
+          <button
+            (click)="setSection('appearance')"
+            [ngClass]="
+              activeSection === 'appearance'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:bg-violet-500/15 dark:text-violet-300 font-semibold shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60'
+            "
+            class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all text-sm font-medium"
+          >
+            <mat-icon class="text-[20px] w-5 h-5">palette</mat-icon>
+            <span>Aparência & Tema</span>
+          </button>
+
+          <button
+            (click)="setSection('profile')"
+            [ngClass]="
+              activeSection === 'profile'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:bg-violet-500/15 dark:text-violet-300 font-semibold shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60'
+            "
+            class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all text-sm font-medium"
+          >
+            <mat-icon class="text-[20px] w-5 h-5">person</mat-icon>
+            <span>Perfil</span>
+          </button>
+
+          <button
+            (click)="setSection('privacy')"
+            [ngClass]="
+              activeSection === 'privacy'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:bg-violet-500/15 dark:text-violet-300 font-semibold shadow-sm'
+                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60'
+            "
+            class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all text-sm font-medium"
+          >
+            <mat-icon class="text-[20px] w-5 h-5">lock</mat-icon>
+            <span>Privacidade</span>
+          </button>
+        </nav>
       </div>
 
-      <nav class="space-y-2">
-        <button
-          (click)="setSection('profile')"
-          [ngClass]="
-            activeSection === 'profile'
-              ? 'bg-emerald-50 text-emerald-700'
-              : 'text-stone-600 hover:bg-stone-50'
-          "
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors font-medium"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          Profile
-        </button>
-
-        <button
-          (click)="setSection('privacy')"
-          [ngClass]="
-            activeSection === 'privacy'
-              ? 'bg-emerald-50 text-emerald-700'
-              : 'text-stone-600 hover:bg-stone-50'
-          "
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors font-medium"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-          Privacy
-        </button>
-
-        <button
-          (click)="setSection('appearance')"
-          [ngClass]="
-            activeSection === 'appearance'
-              ? 'bg-emerald-50 text-emerald-700'
-              : 'text-stone-600 hover:bg-stone-50'
-          "
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-colors font-medium"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-            <path
-              d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.39 2.3-1.03a1.5 1.5 0 0 0-.72-2.47 2.04 2.04 0 0 1-1.58-2 2.28 2.28 0 0 1 2.28-2.28h3.13a2.51 2.51 0 0 0 2.51-2.51c0-5.41-4.41-9.82-9.92-9.82Z"
-            />
-          </svg>
-          Appearance
-        </button>
-      </nav>
-
-      <div class="mt-auto pt-8 border-t border-stone-100">
+      <div class="pt-6 border-t border-slate-200/70 dark:border-slate-800/80">
         <button
           (click)="handleLogout()"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-600 hover:bg-red-50 transition-colors font-medium"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors font-medium text-sm"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-            <polyline points="16 17 21 12 16 7" />
-            <line x1="21" x2="9" y1="12" y2="12" />
-          </svg>
-          Log Out
+          <mat-icon class="text-[20px] w-5 h-5">logout</mat-icon>
+          <span>Sair da conta</span>
         </button>
       </div>
     </div>
 
-    <div class="flex-1 overflow-y-auto p-12">
-      <div class="max-w-3xl mx-auto">
-        <div *ngIf="activeSection === 'profile'" class="space-y-8">
-          <h2 class="text-3xl font-bold text-stone-800 mb-6">Profile Settings</h2>
-          <div class="bg-white rounded-3xl p-8 shadow-sm border border-stone-200 space-y-6">
-            <div>
-              <label class="block text-stone-700 font-medium mb-2">Display Name</label>
-              <input
-                type="text"
-                value="Alex Thompson"
-                class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-400 outline-none transition-all"
-              />
-            </div>
-            <div>
-              <label class="block text-stone-700 font-medium mb-2">Username</label>
-              <input
-                type="text"
-                value="@alexthompson"
-                class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-400 outline-none transition-all"
-              />
-            </div>
-            <div>
-              <label class="block text-stone-700 font-medium mb-2">Bio</label>
-              <textarea
-                rows="4"
-                class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-emerald-400 outline-none transition-all resize-none"
+    <!-- Conteúdo Principal das Configurações -->
+    <div class="flex-1 overflow-y-auto custom-scroll p-6 md:p-10 bg-white dark:bg-[#0f172a]">
+      <div class="max-w-2xl mx-auto">
+        <!-- SEÇÃO: APARÊNCIA & TEMA -->
+        <div *ngIf="activeSection === 'appearance'" class="space-y-8 animate-in fade-in duration-200">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1">Aparência</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">
+              Personalize o visual e a experiência visual do seu chat.
+            </p>
+          </div>
+
+          <!-- Seletor de Tema Principal -->
+          <div class="space-y-4">
+            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Tema da Aplicação
+            </label>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Card: Esmeralda Tech (Light) -->
+              <button
+                type="button"
+                (click)="setTheme('light')"
+                [ngClass]="
+                  themeService.currentTheme() === 'light'
+                    ? 'border-emerald-500 ring-2 ring-emerald-500/20 shadow-md'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                "
+                class="p-4 rounded-2xl border-2 text-left transition-all bg-slate-50/60 dark:bg-[#131b2e] flex flex-col justify-between group"
               >
-Coffee enthusiast ☕ | Love connecting with new people 🌟</textarea
+                <div class="flex items-center justify-between mb-4">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold"
+                  >
+                    <mat-icon class="scale-90">light_mode</mat-icon>
+                  </div>
+                  @if (themeService.currentTheme() === 'light') {
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-4 ring-emerald-100"></div>
+                  }
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">Esmeralda Tech</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Claro, limpo e vibrante</p>
+                </div>
+                <div class="mt-3 flex items-center gap-1.5 pt-3 border-t border-slate-200/60 dark:border-slate-800">
+                  <div class="w-4 h-4 rounded-full bg-emerald-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-slate-100 border border-slate-200"></div>
+                  <div class="w-4 h-4 rounded-full bg-teal-400"></div>
+                </div>
+              </button>
+
+              <!-- Card: Violeta Elétrico (Dark) -->
+              <button
+                type="button"
+                (click)="setTheme('dark')"
+                [ngClass]="
+                  themeService.currentTheme() === 'dark'
+                    ? 'border-violet-500 ring-2 ring-violet-500/30 shadow-md shadow-violet-900/20'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                "
+                class="p-4 rounded-2xl border-2 text-left transition-all bg-slate-50/60 dark:bg-[#131b2e] flex flex-col justify-between group"
               >
+                <div class="flex items-center justify-between mb-4">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-violet-950/70 text-violet-400 flex items-center justify-center font-bold"
+                  >
+                    <mat-icon class="scale-90">dark_mode</mat-icon>
+                  </div>
+                  @if (themeService.currentTheme() === 'dark') {
+                    <div class="w-2.5 h-2.5 rounded-full bg-violet-500 ring-4 ring-violet-950"></div>
+                  }
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">Violeta Elétrico</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Escuro, imersivo e neon</p>
+                </div>
+                <div class="mt-3 flex items-center gap-1.5 pt-3 border-t border-slate-200/60 dark:border-slate-800">
+                  <div class="w-4 h-4 rounded-full bg-violet-600 shadow-sm shadow-violet-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-[#0b0f19] border border-slate-700"></div>
+                  <div class="w-4 h-4 rounded-full bg-indigo-500"></div>
+                </div>
+              </button>
+
+              <!-- Card: Automático (System) -->
+              <button
+                type="button"
+                (click)="setTheme('system')"
+                [ngClass]="
+                  themeService.currentTheme() === 'system'
+                    ? 'border-slate-500 ring-2 ring-slate-400/20 shadow-md'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                "
+                class="p-4 rounded-2xl border-2 text-left transition-all bg-slate-50/60 dark:bg-[#131b2e] flex flex-col justify-between group"
+              >
+                <div class="flex items-center justify-between mb-4">
+                  <div
+                    class="w-9 h-9 rounded-xl bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center font-bold"
+                  >
+                    <mat-icon class="scale-90">devices</mat-icon>
+                  </div>
+                  @if (themeService.currentTheme() === 'system') {
+                    <div class="w-2.5 h-2.5 rounded-full bg-slate-500 ring-4 ring-slate-200 dark:ring-slate-800"></div>
+                  }
+                </div>
+                <div>
+                  <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">Automático</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Segue seu dispositivo</p>
+                </div>
+                <div class="mt-3 flex items-center gap-1.5 pt-3 border-t border-slate-200/60 dark:border-slate-800">
+                  <div class="w-4 h-4 rounded-full bg-emerald-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-violet-500"></div>
+                  <div class="w-4 h-4 rounded-full bg-slate-400"></div>
+                </div>
+              </button>
             </div>
+          </div>
+
+          <!-- Switch Rápido de Modo Escuro -->
+          <div
+            class="flex items-center justify-between p-5 rounded-2xl bg-slate-50/60 dark:bg-[#131b2e] border border-slate-200/70 dark:border-slate-800/80"
+          >
+            <div class="flex items-center gap-4">
+              <div
+                class="w-10 h-10 rounded-xl bg-slate-200/60 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center"
+              >
+                <mat-icon>{{ themeService.isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+              </div>
+              <div>
+                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">Alternar Modo Escuro</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  Atualmente: <span class="font-medium text-emerald-600 dark:text-violet-400">{{ themeService.isDark() ? 'Violeta Elétrico (Ativo)' : 'Esmeralda Tech (Ativo)' }}</span>
+                </p>
+              </div>
+            </div>
+
             <button
-              class="px-8 py-4 bg-emerald-500 text-white rounded-2xl font-bold shadow-lg hover:bg-emerald-600 transition-all"
+              (click)="toggleDarkMode()"
+              type="button"
+              [ngClass]="
+                themeService.isDark()
+                  ? 'bg-violet-600 shadow-md shadow-violet-900/40'
+                  : 'bg-emerald-500 shadow-md shadow-emerald-500/20'
+              "
+              class="relative w-14 h-8 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400"
             >
-              Save Changes
+              <div
+                [ngClass]="themeService.isDark() ? 'translate-x-7' : 'translate-x-1'"
+                class="absolute top-1 w-6 h-6 bg-white rounded-full shadow-sm transition-transform flex items-center justify-center text-slate-700"
+              >
+                <mat-icon class="scale-[0.6]">{{ themeService.isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+              </div>
             </button>
+          </div>
+
+          <!-- Tamanho da Fonte -->
+          <div
+            class="p-5 rounded-2xl bg-slate-50/60 dark:bg-[#131b2e] border border-slate-200/70 dark:border-slate-800/80 space-y-4"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">Tamanho do Texto</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Ajuste para melhor legibilidade</p>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:bg-violet-500/15 dark:text-violet-300">
+                {{ fontSize }}px
+              </span>
+            </div>
+
+            <input
+              type="range"
+              min="14"
+              max="20"
+              [(ngModel)]="fontSize"
+              class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full appearance-none cursor-pointer accent-emerald-500 dark:accent-violet-500"
+            />
+
+            <div class="flex justify-between text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+              <span>Compacto (14px)</span>
+              <span>Padrão (16px)</span>
+              <span>Confortável (20px)</span>
+            </div>
           </div>
         </div>
 
-        <div *ngIf="activeSection === 'privacy'" class="space-y-8">
-          <h2 class="text-3xl font-bold text-stone-800 mb-6">Privacy Settings</h2>
-          <div class="bg-white rounded-3xl p-8 shadow-sm border border-stone-200 space-y-8">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-4">
-                <div class="p-3 bg-stone-100 rounded-xl text-stone-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-stone-800 font-semibold">Notifications</h3>
-                  <p class="text-stone-500 text-sm">Receba alertas de novas mensagens</p>
-                </div>
+        <!-- SEÇÃO: PERFIL -->
+        <div *ngIf="activeSection === 'profile'" class="space-y-6 animate-in fade-in duration-200">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1">Seu Perfil</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Informações da sua conta no chat.</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-50/60 dark:bg-[#131b2e] border border-slate-200/70 dark:border-slate-800/80 flex items-center gap-5">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 dark:from-violet-600 dark:to-indigo-500 text-white flex items-center justify-center text-2xl font-extrabold shadow-lg shadow-emerald-500/20 dark:shadow-violet-600/30"
+            >
+              {{ (authService.currentUser()?.nickname?.charAt(0) || 'U') | uppercase }}
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">
+                  {{ authService.currentUser()?.nickname || 'Usuário' }}
+                </h3>
+                <span class="px-2 py-0.5 text-xs font-semibold rounded-md bg-emerald-500/10 text-emerald-600 dark:bg-violet-500/15 dark:text-violet-300">
+                  #{{ authService.currentUser()?.publicIdentificationKey || '0000' }}
+                </span>
+              </div>
+              <p class="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                {{ authService.currentUser()?.email || 'email@exemplo.com' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
+                Nome de exibição
+              </label>
+              <input
+                type="text"
+                [value]="authService.currentUser()?.nickname || ''"
+                disabled
+                class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-[#0b1120] border border-slate-200/70 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm cursor-not-allowed"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">
+                Email
+              </label>
+              <input
+                type="text"
+                [value]="authService.currentUser()?.email || ''"
+                disabled
+                class="w-full px-4 py-3 rounded-xl bg-slate-100/70 dark:bg-[#0b1120] border border-slate-200/70 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm cursor-not-allowed"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO: PRIVACIDADE -->
+        <div *ngIf="activeSection === 'privacy'" class="space-y-6 animate-in fade-in duration-200">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1">Privacidade & Notificações</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Controle como você interage com outras pessoas.</p>
+          </div>
+
+          <div class="space-y-4">
+            <div
+              class="flex items-center justify-between p-5 rounded-2xl bg-slate-50/60 dark:bg-[#131b2e] border border-slate-200/70 dark:border-slate-800/80"
+            >
+              <div>
+                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">Notificações Sonoras</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Tocar alerta ao receber novas mensagens</p>
               </div>
               <button
                 (click)="notifications = !notifications"
-                [ngClass]="notifications ? 'bg-emerald-500' : 'bg-stone-300'"
-                class="relative w-14 h-8 rounded-full transition-colors"
+                [ngClass]="notifications ? 'bg-emerald-500 dark:bg-violet-600' : 'bg-slate-300 dark:bg-slate-700'"
+                class="relative w-12 h-7 rounded-full transition-colors"
               >
                 <div
-                  [ngClass]="notifications ? 'translate-x-7' : 'translate-x-1'"
-                  class="absolute top-1 w-6 h-6 bg-white rounded-full shadow transition-transform"
+                  [ngClass]="notifications ? 'translate-x-6' : 'translate-x-1'"
+                  class="absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
                 ></div>
               </button>
             </div>
 
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-4">
-                <div class="p-3 bg-stone-100 rounded-xl text-stone-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="text-stone-800 font-semibold">Read Receipts</h3>
-                  <p class="text-stone-500 text-sm">Mostrar quando você visualizou as mensagens</p>
-                </div>
+            <div
+              class="flex items-center justify-between p-5 rounded-2xl bg-slate-50/60 dark:bg-[#131b2e] border border-slate-200/70 dark:border-slate-800/80"
+            >
+              <div>
+                <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">Confirmação de Leitura</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Permitir que contatos vejam quando você visualizou a mensagem</p>
               </div>
               <button
                 (click)="readReceipts = !readReceipts"
-                [ngClass]="readReceipts ? 'bg-emerald-500' : 'bg-stone-300'"
-                class="relative w-14 h-8 rounded-full transition-colors"
+                [ngClass]="readReceipts ? 'bg-emerald-500 dark:bg-violet-600' : 'bg-slate-300 dark:bg-slate-700'"
+                class="relative w-12 h-7 rounded-full transition-colors"
               >
                 <div
-                  [ngClass]="readReceipts ? 'translate-x-7' : 'translate-x-1'"
-                  class="absolute top-1 w-6 h-6 bg-white rounded-full shadow transition-transform"
+                  [ngClass]="readReceipts ? 'translate-x-6' : 'translate-x-1'"
+                  class="absolute top-1 w-5 h-5 bg-white rounded-full shadow transition-transform"
                 ></div>
               </button>
-            </div>
-
-            <div>
-              <h3 class="text-stone-800 font-semibold mb-3">Quem pode te enviar mensagens?</h3>
-              <select
-                class="w-full px-6 py-4 bg-stone-50 border border-stone-200 rounded-2xl outline-none focus:ring-2 focus:ring-emerald-400"
-              >
-                <option>Todos</option>
-                <option>Apenas Amigos</option>
-                <option>Ninguém</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="activeSection === 'appearance'" class="space-y-8">
-          <h2 class="text-3xl font-bold text-stone-800 mb-6">Appearance</h2>
-          <div class="bg-white rounded-3xl p-8 shadow-sm border border-stone-200 space-y-8">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 class="text-stone-800 font-semibold">Modo Escuro</h3>
-                <p class="text-stone-500 text-sm">Altera o visual para cores escuras</p>
-              </div>
-              <button
-                (click)="darkMode = !darkMode"
-                [ngClass]="darkMode ? 'bg-emerald-500' : 'bg-stone-300'"
-                class="relative w-14 h-8 rounded-full transition-colors"
-              >
-                <div
-                  [ngClass]="darkMode ? 'translate-x-7' : 'translate-x-1'"
-                  class="absolute top-1 w-6 h-6 bg-white rounded-full shadow transition-transform"
-                ></div>
-              </button>
-            </div>
-
-            <div>
-              <div class="flex justify-between mb-4">
-                <h3 class="text-stone-800 font-semibold">Tamanho da Fonte</h3>
-                <span class="text-emerald-600 font-bold">{{ fontSize }}px</span>
-              </div>
-              <input
-                type="range"
-                min="12"
-                max="24"
-                [(ngModel)]="fontSize"
-                class="w-full h-2 bg-stone-200 rounded-full appearance-none cursor-pointer accent-emerald-500"
-              />
-              <div
-                class="flex justify-between mt-2 text-xs text-stone-400 uppercase font-bold tracking-wider"
-              >
-                <span>Pequeno</span>
-                <span>Grande</span>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-stone-800 font-semibold mb-4">Tema de Cores</h3>
-              <div class="grid grid-cols-3 gap-4">
-                <button
-                  class="p-2 border-2 border-emerald-500 rounded-2xl bg-emerald-50 transition-transform hover:scale-105"
-                >
-                  <div
-                    class="h-12 w-full bg-gradient-to-r from-emerald-500 to-sky-500 rounded-xl"
-                  ></div>
-                </button>
-                <button
-                  class="p-2 border-2 border-stone-100 rounded-2xl bg-stone-50 transition-transform hover:scale-105"
-                >
-                  <div
-                    class="h-12 w-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl"
-                  ></div>
-                </button>
-                <button
-                  class="p-2 border-2 border-stone-100 rounded-2xl bg-stone-50 transition-transform hover:scale-105"
-                >
-                  <div
-                    class="h-12 w-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-xl"
-                  ></div>
-                </button>
-              </div>
             </div>
           </div>
         </div>

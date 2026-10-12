@@ -1,55 +1,127 @@
-<div class="h-screen bg-stone-50 flex flex-col">
-  <!-- Topbar -->
-  <div class="bg-white border-b border-stone-200 px-8 py-6">
-    <div class="max-w-7xl mx-auto flex items-center gap-6">
-      <div class="flex-1 max-w-2xl relative">
-        <mat-icon class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400"
-          >search</mat-icon
+<div class="h-screen bg-slate-100/70 dark:bg-[#070b13] flex flex-col font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300 overflow-hidden">
+  <!-- Topbar com Glassmorphism Moderno -->
+  <header
+    class="bg-white/85 dark:bg-[#0d1424]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 px-4 sm:px-6 lg:px-8 py-3 shrink-0 z-20 shadow-xs transition-colors"
+  >
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <!-- Logo / Marca -->
+      <div class="flex items-center gap-3 shrink-0">
+        <div
+          class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-500 dark:from-violet-600 dark:to-indigo-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 dark:shadow-violet-600/30 ring-2 ring-emerald-500/20 dark:ring-violet-500/20"
         >
+          <mat-icon class="scale-90">forum</mat-icon>
+        </div>
+        <div class="hidden sm:block">
+          <span class="font-extrabold text-base tracking-tight text-slate-900 dark:text-white">PulseChat</span>
+          <div class="flex items-center gap-1.5 -mt-0.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-violet-400 animate-pulse"></span>
+            <span class="text-[11px] font-medium text-slate-400 dark:text-slate-400">Online</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Busca Central -->
+      <div class="flex-1 max-w-xl mx-2">
         <app-user-search-bar />
       </div>
 
-      <button
-        (click)="openModal()"
-        class="flex items-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full shadow-lg hover:shadow-xl hover:from-emerald-600 hover:to-emerald-700 transition-all"
-      >
-        <mat-icon>groups</mat-icon>
-        <span>Amigos</span>
-      </button>
+      <!-- Ações do Topbar -->
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Botão Conexões / Amigos -->
+        <button
+          (click)="openModal()"
+          class="flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-2xl font-semibold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-violet-600 dark:to-indigo-600 shadow-md shadow-emerald-500/20 dark:shadow-violet-600/30 hover:shadow-lg hover:from-emerald-600 hover:to-teal-700 dark:hover:from-violet-500 dark:hover:to-indigo-500 active:scale-95 transition-all cursor-pointer"
+        >
+          <mat-icon class="text-[18px] w-4.5 h-4.5">people</mat-icon>
+          <span class="hidden sm:inline">Amigos</span>
+        </button>
 
-      <button
-        mat-icon-button
-        (click)="openSettings()"
-        class="hover:bg-stone-100"
-        aria-label="Settings"
-      >
-        <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
-      </button>
+        <!-- Toggle Rápido de Tema (Sol / Lua) -->
+        <button
+          (click)="toggleTheme()"
+          [title]="themeService.isDark() ? 'Mudar para tema claro' : 'Mudar para tema escuro'"
+          class="w-10 h-10 rounded-2xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 transition-all active:scale-90 cursor-pointer"
+        >
+          <mat-icon class="scale-90 text-amber-500 dark:text-violet-400">
+            {{ themeService.isDark() ? 'dark_mode' : 'light_mode' }}
+          </mat-icon>
+        </button>
+
+        <!-- Botão Configurações -->
+        <button
+          (click)="openSettings()"
+          title="Configurações"
+          class="w-10 h-10 rounded-2xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 transition-all active:scale-90 cursor-pointer"
+          aria-label="Settings"
+        >
+          <mat-icon class="scale-90">settings</mat-icon>
+        </button>
+
+        <!-- Perfil do Usuário Resumido -->
+        @if (authService.currentUser(); as user) {
+          <div
+            (click)="openSettings()"
+            class="hidden lg:flex items-center gap-2.5 pl-2 py-1 pr-3 rounded-2xl bg-slate-100/80 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60 cursor-pointer hover:bg-slate-200/60 dark:hover:bg-slate-800 transition-colors"
+          >
+            <div
+              class="w-7 h-7 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 dark:from-violet-600 dark:to-indigo-500 text-white flex items-center justify-center text-xs font-bold"
+            >
+              {{ user.nickname.charAt(0).toUpperCase() }}
+            </div>
+            <div class="text-left leading-none">
+              <p class="text-xs font-bold text-slate-800 dark:text-slate-200">{{ user.nickname }}</p>
+              <span class="text-[10px] text-slate-400">#{{ user.publicIdentificationKey }}</span>
+            </div>
+          </div>
+        }
+      </div>
     </div>
-  </div>
+  </header>
 
-  <!-- Content -->
-  <div class="flex-1 flex overflow-hidden">
+  <!-- Conteúdo Principal -->
+  <main class="flex-1 flex overflow-hidden">
+    <!-- Barra Lateral de Conversas -->
     <app-chat-sidebar-component />
 
+    <!-- Área de Chat Ativa ou Estado Vazio -->
     @if (currentChat()) {
-      <app-chat-window-component class="flex-1 w-full h-full" />
+      <app-chat-window-component class="flex-1 w-full h-full min-w-0" />
     } @else {
-      <div class="flex-1 flex items-center justify-center bg-stone-50">
-        <div class="text-center">
+      <div
+        class="flex-1 flex items-center justify-center bg-slate-50/60 dark:bg-[#070b13] p-6 relative overflow-hidden transition-colors"
+      >
+        <!-- Brilho Ambiente no Fundo -->
+        <div
+          class="absolute w-96 h-96 rounded-full bg-emerald-500/5 dark:bg-violet-600/10 blur-3xl pointer-events-none"
+        ></div>
+
+        <div class="text-center relative z-10 max-w-sm mx-auto p-8 animate-in fade-in zoom-in-95 duration-300">
           <div
-            class="w-24 h-24 bg-stone-200 rounded-full mx-auto mb-6 flex items-center justify-center"
+            class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-emerald-500/10 to-teal-500/10 dark:from-violet-600/20 dark:to-indigo-600/20 border border-emerald-500/20 dark:border-violet-500/30 text-emerald-600 dark:text-violet-400 mx-auto mb-6 flex items-center justify-center shadow-lg shadow-emerald-500/5 dark:shadow-violet-600/10"
           >
-            <mat-icon>search</mat-icon>
+            <mat-icon class="scale-125">chat_bubble_outline</mat-icon>
           </div>
-          <h2 class="text-stone-700 mb-2 text-2xl">Nenhuma conversa selecionada</h2>
-          <p class="text-stone-500">Comece uma nova conversa agora</p>
+
+          <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2">
+            Nenhuma conversa aberta
+          </h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
+            Selecione uma conversa na lista ou encontre amigos para iniciar uma troca de mensagens em tempo real.
+          </p>
+
+          <button
+            (click)="openModal()"
+            class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white dark:bg-[#131b2e] border border-slate-200/90 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-violet-400 font-semibold text-sm shadow-sm hover:shadow-md transition-all cursor-pointer active:scale-95"
+          >
+            <mat-icon class="text-[18px] w-4.5 h-4.5 text-emerald-500 dark:text-violet-400">group_add</mat-icon>
+            <span>Ver Amigos Conectados</span>
+          </button>
         </div>
       </div>
     }
-  </div>
+  </main>
 
-  <!-- Modals -->
+  <!-- Modais -->
   <app-connections-dialog [isOpen]="isConnectionsModalOpen" (onClose)="closeModal()" />
 
   <app-settings-overlay

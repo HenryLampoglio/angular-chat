@@ -1,45 +1,100 @@
-<div class="h-full flex flex-col bg-stone-50">
-  <div class="bg-white px-8 py-5 border-b border-stone-200 flex items-center gap-4 shrink-0">
-    <img
-      [src]="'https://ui-avatars.com/api/?name=' + nomeDoContato()"
-      class="w-12 h-12 rounded-full object-cover"
-    />
-    <div>
-      <h3 class="text-stone-800 font-semibold">{{ nomeDoContato() }}</h3>
+<div class="h-full flex flex-col bg-slate-50/70 dark:bg-[#070b13] transition-colors duration-200 overflow-hidden">
+  <!-- Topbar do Chat -->
+  <header
+    class="bg-white/90 dark:bg-[#0c1220]/95 backdrop-blur-md px-6 py-3.5 border-b border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between shrink-0 transition-colors"
+  >
+    <div class="flex items-center gap-3.5 min-w-0">
+      <div class="relative shrink-0">
+        <div
+          class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 dark:from-violet-600 dark:to-indigo-500 text-white flex items-center justify-center font-bold text-base shadow-sm ring-2 ring-white dark:ring-[#0c1220]"
+        >
+          {{ nomeDoContato().charAt(0).toUpperCase() }}
+        </div>
+        <span
+          class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 dark:bg-violet-400 border-2 border-white dark:border-[#0c1220] rounded-full shadow-2xs"
+        ></span>
+      </div>
 
-      <p class="text-stone-400 text-xs">Conversa iniciada</p>
+      <div class="min-w-0">
+        <h3 class="text-sm font-bold text-slate-900 dark:text-slate-100 truncate leading-tight">
+          {{ nomeDoContato() }}
+        </h3>
+        <p class="text-[11px] text-emerald-600 dark:text-violet-400 font-medium flex items-center gap-1 mt-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-violet-400"></span>
+          Conectado agora
+        </p>
+      </div>
     </div>
-  </div>
 
-  <div class="flex-1 overflow-y-auto p-8 space-y-6">
+    <div class="flex items-center gap-1 text-slate-400 dark:text-slate-500">
+      <button
+        class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
+        title="Buscar nesta conversa"
+      >
+        <mat-icon class="scale-85">search</mat-icon>
+      </button>
+      <button
+        class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-pointer"
+        title="Opções da conversa"
+      >
+        <mat-icon class="scale-85">more_vert</mat-icon>
+      </button>
+    </div>
+  </header>
+
+  <!-- Área de Mensagens -->
+  <div class="flex-1 overflow-y-auto custom-scroll p-4 sm:p-6 space-y-4">
+    <!-- Aviso de Início da Conversa -->
+    <div class="flex flex-col items-center justify-center py-6 text-center">
+      <div
+        class="w-12 h-12 rounded-2xl bg-slate-200/50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 flex items-center justify-center mb-2"
+      >
+        <mat-icon class="scale-90">lock</mat-icon>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+        Esta é uma conversa direta e segura com <span class="font-bold text-slate-700 dark:text-slate-200">{{ nomeDoContato() }}</span>.
+      </p>
+      <span class="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+        As mensagens trafegam em tempo real.
+      </span>
+    </div>
+
+    <!-- Lista de Mensagens -->
     @for (msg of messages(); track $index) {
-      <div class="flex gap-3 w-full" [ngClass]="msg.souEu ? 'justify-end' : 'justify-start'">
+      <div
+        class="flex gap-2.5 w-full animate-in fade-in slide-in-from-bottom-1 duration-150"
+        [ngClass]="msg.souEu ? 'justify-end' : 'justify-start'"
+      >
         @if (!msg.souEu) {
-          <img
-            [src]="'https://ui-avatars.com/api/?name=' + (msg.nickname || 'User')"
-            class="w-8 h-8 rounded-full object-cover self-end"
-          />
+          <div
+            class="w-7 h-7 rounded-xl bg-gradient-to-tr from-emerald-100 to-teal-100 dark:from-violet-950/70 dark:to-indigo-950/70 text-emerald-700 dark:text-violet-300 text-xs font-bold flex items-center justify-center self-end mb-1 shrink-0 border border-emerald-200/50 dark:border-violet-800/40"
+          >
+            {{ (msg.nickname || 'U').charAt(0).toUpperCase() }}
+          </div>
         }
 
-        <div class="flex flex-col" [ngClass]="msg.souEu ? 'items-end' : 'items-start'">
-          @if (!msg.souEu) {
-            <span class="text-xs text-stone-500 mb-1 ml-2">{{ msg.nickname }}</span>
+        <div class="flex flex-col max-w-[85%] sm:max-w-md" [ngClass]="msg.souEu ? 'items-end' : 'items-start'">
+          @if (!msg.souEu && msg.nickname) {
+            <span class="text-[11px] font-semibold text-emerald-600 dark:text-violet-400 mb-1 ml-2">
+              {{ msg.nickname }}
+            </span>
           }
 
           <div
-            class="max-w-md px-6 py-4 shadow-md text-sm"
+            class="px-4.5 py-3 text-sm leading-relaxed transition-all"
             [ngClass]="{
-              'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-3xl rounded-br-none':
+              'bg-gradient-to-r from-emerald-500 to-teal-600 text-white dark:from-violet-600 dark:to-indigo-600 rounded-2xl rounded-tr-xs shadow-md shadow-emerald-500/15 dark:shadow-violet-950/30':
                 msg.souEu,
-              'bg-white text-stone-800 rounded-3xl rounded-bl-none': !msg.souEu,
+              'bg-white text-slate-800 dark:bg-[#131b2e] dark:text-slate-100 border border-slate-200/70 dark:border-slate-800/80 rounded-2xl rounded-tl-xs shadow-2xs':
+                !msg.souEu,
             }"
           >
-            <p class="mb-2">{{ msg.texto }}</p>
+            <p class="whitespace-pre-wrap break-words">{{ msg.texto }}</p>
             <span
-              class="text-xs block text-right"
-              [ngClass]="msg.souEu ? 'text-emerald-100' : 'text-stone-500'"
+              class="text-[10px] block text-right mt-1 font-medium"
+              [ngClass]="msg.souEu ? 'text-emerald-100/80 dark:text-violet-200/80' : 'text-slate-400 dark:text-slate-500'"
             >
-              {{ msg.hora | date: 'shortTime' }}
+              {{ msg.hora ? (msg.hora | date: 'shortTime') : 'Agora' }}
             </span>
           </div>
         </div>
@@ -47,5 +102,6 @@
     }
   </div>
 
+  <!-- Input de Envio de Mensagem -->
   <app-message-input (aoEnviar)="receberDoFilho($event)"></app-message-input>
 </div>

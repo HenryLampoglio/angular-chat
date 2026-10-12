@@ -1,117 +1,169 @@
-<Main
-  class="min-h-screen bg-[#F8F9F5] flex items-center justify-center p-6 md:p-10 font-sans text-stone-800"
+<main
+  class="min-h-screen bg-slate-100/80 dark:bg-[#070b13] flex items-center justify-center p-4 sm:p-6 md:p-10 font-sans text-slate-800 dark:text-slate-100 transition-colors duration-300 relative"
 >
-  <div
-    class="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-xl shadow-emerald-900/5 overflow-hidden flex border border-stone-100"
-  >
-    <div
-      class="sm:flex w-1/2 bg-gradient-to-br from-emerald-50 to-teal-50 items-center justify-center p-10 border-r border-stone-50"
+  <!-- Botão Flutuante de Tema no Canto Superior Direito -->
+  <div class="absolute top-5 right-5 sm:top-8 sm:right-8 z-20">
+    <button
+      (click)="themeService.toggleTheme()"
+      [title]="themeService.isDark() ? 'Mudar para tema claro' : 'Mudar para tema escuro'"
+      class="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white/80 dark:bg-[#111728]/80 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 text-slate-600 dark:text-slate-300 shadow-sm hover:shadow-md transition-all cursor-pointer active:scale-95"
     >
-      <div class="max-w-[340px] text-center">
-        <img
-          src="https://images.unsplash.com/photo-1765654706433-3ef820c73ba4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXR1cmUlMjBpbGx1c3RyYXRpb24lMjBtaW5pbWFsfGVufDF8fHx8MTc2NjI2NjgxMHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-          alt="Join community"
-          class="w-full h-auto rounded-3xl mb-8"
-        />
-        <h2 class="text-2xl font-bold text-stone-800 mb-3 tracking-tight">Junte-se a nós!</h2>
-        <p class="text-base text-stone-600 leading-relaxed">
-          Crie conexões reais e jogue conversa fora
+      <mat-icon class="scale-85 text-amber-500 dark:text-violet-400">
+        {{ themeService.isDark() ? 'dark_mode' : 'light_mode' }}
+      </mat-icon>
+      <span class="text-xs font-semibold hidden sm:inline">
+        {{ themeService.isDark() ? 'Violeta Elétrico' : 'Esmeralda Tech' }}
+      </span>
+    </button>
+  </div>
+
+  <div
+    class="w-full max-w-4xl bg-white dark:bg-[#0f172a] rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-800 overflow-hidden flex flex-col md:flex-row transition-all duration-300"
+  >
+    <!-- Lado Esquerdo Visual (Hero) -->
+    <div
+      class="hidden md:flex md:w-5/12 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-violet-950/40 dark:to-indigo-950/40 items-center justify-center p-8 lg:p-12 border-b md:border-b-0 md:border-r border-slate-200/60 dark:border-slate-800/80 relative overflow-hidden"
+    >
+      <div
+        class="absolute -top-12 -left-12 w-48 h-48 rounded-full bg-emerald-500/10 dark:bg-violet-600/15 blur-2xl"
+      ></div>
+
+      <div class="max-w-[300px] text-center relative z-10">
+        <div
+          class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-emerald-500 to-teal-400 dark:from-violet-600 dark:to-indigo-500 flex items-center justify-center text-white mx-auto mb-6 shadow-lg shadow-emerald-500/25 dark:shadow-violet-600/35"
+        >
+          <mat-icon class="scale-125">group_add</mat-icon>
+        </div>
+
+        <h2 class="text-2xl font-extrabold text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
+          Crie sua conta
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          Faça parte da nossa comunidade, adicione amigos e converse sem limites.
         </p>
+
+        <div class="mt-8 flex items-center justify-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-violet-400 animate-pulse"></span>
+          <span class="text-xs font-semibold text-emerald-600 dark:text-violet-400">
+            100% Gratuito & Seguro
+          </span>
+        </div>
       </div>
     </div>
 
-    <div class="w-full sm:w-1/2 p-10 md:p-16 flex items-center justify-center bg-white">
-      <div class="w-full max-w-[400px]">
-        <div class="mb-8">
-          <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Crie sua conta</h1>
-          <p class="text-base text-stone-500 font-medium">Vamos começar sua jornada :)</p>
+    <!-- Lado Direito do Formulário -->
+    <div class="w-full md:w-7/12 p-8 sm:p-10 lg:p-12 flex items-center justify-center bg-white dark:bg-[#0f172a]">
+      <div class="w-full max-w-[380px]">
+        <div class="mb-6">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-1">
+            Cadastre-se
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            Preencha seus dados para começar agora mesmo.
+          </p>
         </div>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-3.5">
           <div>
-            <label for="nickname" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
-              >NOME DE USUÁRIO</label
-            >
-            <input
-              id="nickname"
-              type="text"
-              formControlName="nickname"
-              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
-              placeholder="Como quer ser chamado?"
-            />
+            <label for="nickname" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1.5 ml-1">
+              Nome de Usuário
+            </label>
+            <div class="relative flex items-center">
+              <mat-icon class="absolute left-4 text-slate-400 scale-85 pointer-events-none">person</mat-icon>
+              <input
+                id="nickname"
+                type="text"
+                formControlName="nickname"
+                autocomplete="username"
+                class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#131b2e] border border-slate-200 dark:border-slate-800 rounded-2xl text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 dark:focus:ring-violet-500/50 focus:border-emerald-400 dark:focus:border-violet-500 transition-all"
+                placeholder="Como quer ser chamado?"
+              />
+            </div>
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
-              >EMAIL</label
-            >
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
-              placeholder="seu@email.com"
-            />
+            <label for="email" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1.5 ml-1">
+              Email
+            </label>
+            <div class="relative flex items-center">
+              <mat-icon class="absolute left-4 text-slate-400 scale-85 pointer-events-none">mail</mat-icon>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                autocomplete="email"
+                class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#131b2e] border border-slate-200 dark:border-slate-800 rounded-2xl text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 dark:focus:ring-violet-500/50 focus:border-emerald-400 dark:focus:border-violet-500 transition-all"
+                placeholder="seu@email.com"
+              />
+            </div>
           </div>
 
           <div>
-            <label for="hashedPassword" class="block text-sm font-bold text-stone-600 mb-2 ml-1"
-              >SENHA</label
-            >
-            <input
-              id="hashedPassword"
-              type="password"
-              formControlName="hashedPassword"
-              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
-              placeholder="••••••••"
-            />
+            <label for="hashedPassword" class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1.5 ml-1">
+              Senha
+            </label>
+            <div class="relative flex items-center">
+              <mat-icon class="absolute left-4 text-slate-400 scale-85 pointer-events-none">lock</mat-icon>
+              <input
+                id="hashedPassword"
+                type="password"
+                formControlName="hashedPassword"
+                autocomplete="new-password"
+                class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#131b2e] border border-slate-200 dark:border-slate-800 rounded-2xl text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 dark:focus:ring-violet-500/50 focus:border-emerald-400 dark:focus:border-violet-500 transition-all"
+                placeholder="••••••••"
+              />
+            </div>
 
             @if (registerForm.get('hashedPassword')?.errors?.['pattern']) {
-            <p class="mt-2 text-[11px] leading-relaxed text-red-500 font-medium px-1">
-              A senha deve conter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um
-              número e um símbolo.
-            </p>
+              <p class="mt-1.5 text-[11px] leading-relaxed text-rose-500 font-medium px-1">
+                A senha deve conter no mínimo 8 caracteres, maiúscula, minúscula, número e símbolo.
+              </p>
             }
           </div>
 
           <div>
             <label
               for="hashedPasswordConfirmation"
-              class="block text-sm font-bold text-stone-600 mb-2 ml-1"
-              >CONFIRME A SENHA</label
+              class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-1.5 ml-1"
             >
-            <input
-              id="hashedPasswordConfirmation"
-              type="password"
-              formControlName="hashedPasswordConfirmation"
-              class="w-full px-5 py-3.5 bg-stone-50 border border-stone-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-50 focus:border-emerald-400 transition-all"
-              #passConfirm
-              (input)="checkPassowrds()"
-              placeholder="••••••••"
-            />
+              Confirmar Senha
+            </label>
+            <div class="relative flex items-center">
+              <mat-icon class="absolute left-4 text-slate-400 scale-85 pointer-events-none">lock_reset</mat-icon>
+              <input
+                id="hashedPasswordConfirmation"
+                type="password"
+                formControlName="hashedPasswordConfirmation"
+                autocomplete="new-password"
+                class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-[#131b2e] border border-slate-200 dark:border-slate-800 rounded-2xl text-sm text-slate-800 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 dark:focus:ring-violet-500/50 focus:border-emerald-400 dark:focus:border-violet-500 transition-all"
+                #passConfirm
+                (input)="checkPassowrds()"
+                placeholder="••••••••"
+              />
+            </div>
 
             @if (passConfirm.value.length > 0 && !passowrdCheckeds) {
-            <p class="mt-2 text-xs text-red-500 font-bold px-1">As senhas não conferem.</p>
+              <p class="mt-1 text-xs text-rose-500 font-semibold px-1">As senhas não conferem.</p>
             }
           </div>
 
-          <div class="pt-4">
+          <div class="pt-2">
             <button
               type="submit"
               [disabled]="!registerForm.valid || !passowrdCheckeds"
-              class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-base font-bold py-4 rounded-2xl shadow-lg shadow-emerald-100 transition-all active:scale-[0.98] disabled:opacity-50"
+              class="w-full py-3.5 px-6 rounded-2xl font-bold text-sm text-white bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-violet-600 dark:to-indigo-600 shadow-md shadow-emerald-500/25 dark:shadow-violet-600/35 hover:shadow-lg hover:from-emerald-600 hover:to-teal-700 dark:hover:from-violet-500 dark:hover:to-indigo-500 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed transition-all cursor-pointer"
             >
               Criar minha conta
             </button>
           </div>
         </form>
 
-        <div class="mt-8 text-center">
-          <p class="text-sm text-stone-500">
-            Já tem uma conta?
+        <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Já possui uma conta?
             <a
               [routerLink]="['/login']"
-              class="text-emerald-600 font-bold hover:underline underline-offset-4 ml-1"
+              class="text-emerald-600 dark:text-violet-400 font-bold hover:underline underline-offset-4 ml-1"
             >
               Acesse aqui
             </a>
@@ -120,4 +172,4 @@
       </div>
     </div>
   </div>
-</Main>
+</main>

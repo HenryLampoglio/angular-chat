@@ -1,10 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Necessário para o input range (ngModel)
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { ThemeService, ThemeMode } from '../../services/theme.service';
+import { AuthService } from '../../services/auth/Auth.service';
 
 @Component({
   selector: 'app-settings-overlay',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './settings-overlay.html',
   styleUrl: './settings-overlay.css',
 })
@@ -13,15 +16,25 @@ export class SettingsOverlay {
   @Output() onClose = new EventEmitter<void>();
   @Output() onLogout = new EventEmitter<void>();
 
+  readonly themeService = inject(ThemeService);
+  readonly authService = inject(AuthService);
+
   // Estados internos
-  activeSection: 'profile' | 'privacy' | 'appearance' = 'profile';
+  activeSection: 'profile' | 'privacy' | 'appearance' = 'appearance';
   notifications: boolean = true;
   readReceipts: boolean = true;
-  darkMode: boolean = false;
   fontSize: number = 16;
 
   setSection(section: 'profile' | 'privacy' | 'appearance') {
     this.activeSection = section;
+  }
+
+  setTheme(mode: ThemeMode) {
+    this.themeService.setTheme(mode);
+  }
+
+  toggleDarkMode() {
+    this.themeService.toggleTheme();
   }
 
   handleClose() {

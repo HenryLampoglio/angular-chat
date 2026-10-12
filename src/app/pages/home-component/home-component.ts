@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatSidebarComponent } from '../../components/chat-sidebar-component/chat-sidebar-component';
 import { ChatWindowComponent } from '../../components/chat-window-component/chat-window-component';
 import { ConnectionsDialog } from '../../components/connections-dialog/connections-dialog';
 import { SettingsOverlay } from '../../components/settings-overlay/settings-overlay';
 import { UserSearchBar } from '../../components/user-search-bar/user-search-bar';
-
-// Importe o serviço de estado!
 import { ChatStateService } from '../../services/chat-state.service';
+import { ThemeService } from '../../services/theme.service';
+import { AuthService } from '../../services/auth/Auth.service';
 
 @Component({
   selector: 'app-home-component',
@@ -23,17 +24,15 @@ import { ChatStateService } from '../../services/chat-state.service';
   styleUrl: './home-component.css',
 })
 export class HomeComponent {
-  // 1. Injeta o serviço
   private chatStateService = inject(ChatStateService);
+  private router = inject(Router);
+  readonly themeService = inject(ThemeService);
+  readonly authService = inject(AuthService);
 
-  // 2. Aponta a variável diretamente para o Signal.
-  // Agora ela é reativa e sabe quando um ID de chat foi setado!
   currentChat = this.chatStateService.chatIdAtivo;
 
   isConnectionsModalOpen: boolean = false;
   isSettingModalsOpen: boolean = false;
-
-  // Removi o construtor que setava false, pois o Signal já começa com null por padrão
 
   openModal() {
     this.isConnectionsModalOpen = true;
@@ -51,8 +50,13 @@ export class HomeComponent {
     this.isSettingModalsOpen = false;
   }
 
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
+
   handleLogout() {
-    console.log('Usuário deslogado!');
+    this.authService.logout();
     this.isSettingModalsOpen = false;
+    this.router.navigate(['/login']);
   }
 }

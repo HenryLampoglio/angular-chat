@@ -5,15 +5,20 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth/Auth.service';
 
+import { MatIconModule } from '@angular/material/icon';
+import { ThemeService } from '../../services/theme.service';
+import { inject } from '@angular/core';
+
 @Component({
   selector: 'app-register-component',
-  imports: [ReactiveFormsModule, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, RouterLink, CommonModule, MatIconModule],
   templateUrl: './register-component.html',
   styleUrl: './register-component.css',
 })
 export class RegisterComponent {
   registerForm: FormGroup;
   passowrdCheckeds: boolean;
+  readonly themeService = inject(ThemeService);
 
   constructor(
     private fb: FormBuilder,
